@@ -1,9 +1,9 @@
-﻿#version 330
+﻿#version 430
 
 out vec4 outputColor;
 
-uniform vec3 objColor;
+uniform vec4 objectColor;
 
 void main() {
-    outputColor = vec4(objColor, 1.0);
+    outputColor = objectColor;
 }

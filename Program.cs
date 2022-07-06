@@ -1,7 +1,7 @@
 ﻿using OpenTK.Windowing.Desktop;
 using OpenTK.Mathematics;
 
-namespace objectFinal
+namespace ConsoleApp3
 {
 	class Program
 	{
@@ -9,8 +9,8 @@ namespace objectFinal
 		{
 			var ourWindow = new NativeWindowSettings()
 			{
-				Size = new Vector2i(800, 800),
-				Title = "Objects"
+				Size = new Vector2i(600, 600),
+				Title = "INI CERITANYA DI TAMAN"
 			};
 
 			using (var window = new Window(GameWindowSettings.Default, ourWindow))
