@@ -1267,6 +1267,16 @@ namespace ConsoleApp3
         {
             var cockroach = new Asset3d("normalShader.vert", "normalShader.frag", new Vector3(1, 1, 1));
 
+            /*var angin = new Asset3d(new Vector3(0, 0, 0));
+            angin.prepareVertices();
+            angin.setControlCoordinate(-2.4f, -0.2f, -0.65f);
+            angin.setControlCoordinate(-2.7f, -0.3f, -0.55f);
+            angin.setControlCoordinate(-2.73f, -0.255f, -0.4f);
+            List<Vector3> angin_bezier = angin.createCurveBazier();
+            angin.setVertices(angin_bezier);
+            angin.translate(4.2f, 0.25f, -2.2f);
+            cockroach.child.Add(angin);*/
+
             // KAKI 1
             var cube1 = new Asset3d("normalShader.vert", "normalShader.frag", new Vector3(0.5f, 0.5f, 0.5f));
             cube1.createCuboid_v2(0f, 0f, 0f, 0.1f, 1.5f, true);
@@ -1324,49 +1334,58 @@ namespace ConsoleApp3
             var ellips1 = new Asset3d("normalShader.vert", "normalShader.frag", new Vector3(0.6f, 0.4f, 0.2f));
             ellips1.createEllipsoid(0f, 0f, -0.5f, 1.75f, .5f, 1f, 50, 50, true);
 
-            // MUKA
+            // KEPALA
             var ellips2 = new Asset3d("normalShader.vert", "normalShader.frag", new Vector3(0.39f, 0.26f, 0.12f));
             ellips2.createEllipsoid(1.75f, 0f, -0.5f, .15f, .35f, .25f, 50, 50, true);
 
             var eye1 = new Asset3d("normalShader.vert", "normalShader.frag", new Vector3(0.8627450980392157f, 0.8627450980392157f, 0.8627450980392157f));
             eye1.createEllipsoid(1.75f, .25f, -.25f, .1f, .1f, .1f, 30, 30, true);
+
             var eye2 = new Asset3d("normalShader.vert", "normalShader.frag", new Vector3(0.8627450980392157f, 0.8627450980392157f, 0.8627450980392157f));
             eye2.createEllipsoid(1.75f, .25f, -.75f, .1f, .1f, .1f, 30, 30, true);
 
-            // SAYAP
             var wings = new Asset3d("normalShader.vert", "normalShader.frag", new Vector3(0.1f, 1f, 1f));
             wings.createHyper(-0.5f, 0f, 0f, 0.5f, 0.25f, 0.5f, 5, 100, true);
             wings.rotate(Vector3.Zero, Vector3.UnitY, -90);
             wings.rotate(Vector3.Zero, Vector3.UnitZ, -45);
-            
+            cockroach.child.Add(wings);
+
             var wings2 = new Asset3d("normalShader.vert", "normalShader.frag", new Vector3(0.1f, 1f, 1f));
             wings2.createHyper(-0.5f, 0f, 0f, 0.5f, -.25f, 0.5f, 5, 100, true);
             wings2.rotate(Vector3.Zero, Vector3.UnitY, -90);
             wings2.rotate(Vector3.Zero, Vector3.UnitZ, -45);
-
-            cockroach.child.Add(wings);
             cockroach.child.Add(wings2);
 
-            cockroach.child.Add(cube1);
-            cockroach.child.Add(cube2);
-            cockroach.child.Add(cube3);
-            cockroach.child.Add(cube4);
-            cockroach.child.Add(cube5);
-            cockroach.child.Add(cube6);
-            cockroach.child.Add(cube7);
-            cockroach.child.Add(cube8);
-            cockroach.child.Add(cube9);
-            cockroach.child.Add(cube10);
-            cockroach.child.Add(cube11);
-            cockroach.child.Add(cube12);
+            var kaki1 = new Asset3d("normalShader.vert", "normalShader.frag", new Vector3(1, 1, 1));
+            kaki1.child.Add(cube1);
+            kaki1.child.Add(cube2);
+            kaki1.child.Add(cube7);
+            kaki1.child.Add(cube8);
+            cockroach.child.Add(kaki1);
 
-            cockroach.child.Add(eye1);
-            cockroach.child.Add(eye2);
+            var kaki2 = new Asset3d("normalShader.vert", "normalShader.frag", new Vector3(1, 1, 1));
+            kaki2.child.Add(cube3);
+            kaki2.child.Add(cube4);
+            kaki2.child.Add(cube9);
+            kaki2.child.Add(cube10);
+            cockroach.child.Add(kaki2);
+
+            var kaki3 = new Asset3d("normalShader.vert", "normalShader.frag", new Vector3(1, 1, 1));
+            kaki3.child.Add(cube5);
+            kaki3.child.Add(cube6);
+            kaki3.child.Add(cube11);
+            kaki3.child.Add(cube12);
+            cockroach.child.Add(kaki3);
+
+            var muka = new Asset3d("normalShader.vert", "normalShader.frag", new Vector3(1, 1, 1));
+            muka.child.Add(eye2);
+            muka.child.Add(eye1);
+            muka.child.Add(ellips2);
+            cockroach.child.Add(muka);
 
             cockroach.child.Add(ellips1);
-            cockroach.child.Add(ellips2);
 
-            cockroach.translate(x, y, z);
+            cockroach.translate(x,y,z);
 
             return cockroach;
         }

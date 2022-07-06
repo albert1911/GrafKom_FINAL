@@ -41,6 +41,14 @@ namespace ConsoleApp3
         float c = 0;
         float delay = 1;
 
+        // variabel utk animasi third person
+        float walk = 0;
+        bool walking = false;
+        float fly = 0;
+        bool flying = false;
+        bool changeFoot = true;
+        bool headDir = true;
+
         public Window(GameWindowSettings gameWindowSettings, NativeWindowSettings nativeWindowSettings) : base(gameWindowSettings, nativeWindowSettings)
         {
 
@@ -607,8 +615,8 @@ namespace ConsoleApp3
             // THIRD PERSON
             var temp = new Asset3d("", "", new Vector3(1, 1, 1));
             bug1 = temp.createCockroach(-11f, -1.5f, .5f);
-            bug1.child[0].scaleNew(0.1f, 0.1f, 0.1f, bug1.child[0].objectCenter);
-            bug1.child[1].scaleNew(0.1f, 0.1f, 0.1f, bug1.child[1].objectCenter);
+            /*bug1.child[0].scaleNew(0.1f, 0.1f, 0.1f, bug1.child[0].objectCenter);
+            bug1.child[1].scaleNew(0.1f, 0.1f, 0.1f, bug1.child[1].objectCenter);*/
             bug1.rotate(Vector3.Zero, Vector3.UnitY, 90);
 
             // TIANG LAMPU
@@ -624,7 +632,7 @@ namespace ConsoleApp3
             var lightPole4 = temp.createLightPole(15, 0, -15);
             objectList.Add(lightPole4);
 
-            // LAMPU (lebih dari 1)
+            // LAMPU
             var pointLight1 = new Asset3d("shader.vert", "shader.frag", new Vector3(1, 1, 1));
             pointLight1.createEllipsoid(lightPole1.objectCenter.X + 15, lightPole1.objectCenter.Y, lightPole1.objectCenter.Z, 2.25f, 2.25f, 2.25f, 30, 30, false);
             pointLights.Add(pointLight1);
@@ -737,63 +745,63 @@ namespace ConsoleApp3
             {
                 if (a <= 250)
                 {
-                    objectList[0].child[0].rotate(objectList[0].child[0].objectCenter, Vector3.UnitZ, -100 * time);
-                    objectList[0].child[1].rotate(objectList[0].child[1].objectCenter, Vector3.UnitZ, 100 * time);
+                    objectList[0].child[0].rotate(objectList[0].child[1].objectCenter, Vector3.UnitZ, -100 * time);
+                    objectList[0].child[1].rotate(objectList[0].child[2].objectCenter, Vector3.UnitZ, 100 * time);
                     //ulat
 
                     // ANT
                     objectList[1].child[23].rotate(objectList[1].child[23].objectCenter, Vector3.UnitY, -100 * time);
                     objectList[1].child[24].rotate(objectList[1].child[24].objectCenter, Vector3.UnitY, 100 * time);
-                    if (b > 0 + delay && b < 50 + delay)
+                    if (b > 0 + delay && b < 50 / 2 + delay)
                     {
-                        objectList[0].translate(0, 0, 0.005f);
+                        objectList[0].translate(0, 0, 0.005f * 2);
 
                     }
-                    if (b > 5 + delay && b <= 21 + delay)
+                    if (b > 5 / 2 + delay && b <= 21 / 2 + delay)
                     {
-                        objectList[2].translate(0, -0.0025f, 0);
+                        objectList[2].translate(0, -0.0025f * 2, 0);
                     }
-                    if (b >= 21 + delay && b < 58 + delay)
+                    if (b >= 21 / 2 + delay && b < 58 / 2 + delay)
                     {
-                        objectList[1].translate(0.0005f, 0, -0.001f);
+                        objectList[1].translate(0.0005f * 2, 0, -0.001f * 2);
                     }
-                    if ((b >= 58 + delay && b < 59 + delay))
+                    if ((b >= 29 + delay && b < 30 + delay))
                     {
                         objectList[1].rotate(Vector3.Zero, Vector3.UnitY, -90);
                         objectList[1].translate(-6, 0, 5);
                         objectList[2].translate(0, 0.0125f, 0);
                     }
-                    if ((b >= 59 + delay && b < 150 + delay))
+                    if ((b >= 30 + delay && b < 150 / 2 + delay))
                     {
-                        objectList[1].translate(-0.001f, 0.001f, 0.0005f);
-                        objectList[2].translate(-0.001f, -0.001f, 0.0005f);
+                        objectList[1].translate(-0.001f * 2, 0.001f, 0.0005f * 2);
+                        objectList[2].translate(-0.001f * 2, -0.001f, 0.0005f * 2);
                     }
                 }
                 else
                 {
-                    objectList[0].child[0].rotate(objectList[0].child[0].objectCenter, Vector3.UnitZ, 100 * time);
-                    objectList[0].child[1].rotate(objectList[0].child[1].objectCenter, Vector3.UnitZ, -100 * time);
+                    objectList[0].child[0].rotate(objectList[0].child[1].objectCenter, Vector3.UnitZ, 100 * time);
+                    objectList[0].child[1].rotate(objectList[0].child[2].objectCenter, Vector3.UnitZ, -100 * time);
                     //ulat
 
                     // ANT
                     objectList[1].child[23].rotate(objectList[1].child[23].objectCenter, Vector3.UnitY, 100 * time);
                     objectList[1].child[24].rotate(objectList[1].child[24].objectCenter, Vector3.UnitY, -100 * time);
-                    if (b > 0 + delay && b < 50 + delay)
+                    if (b > 0 + delay && b < 50 / 2 + delay)
                     {
-                        objectList[0].translate(0, 0, 0.0025f);
+                        objectList[0].translate(0, 0, 0.0025f * 2);
                     }
-                    if (b > 5 + delay && b <= 21 + delay)
+                    if (b > 5 / 2 + delay && b <= 21 / 2 + delay)
                     {
-                        objectList[2].translate(0, -0.0005f, 0);
+                        objectList[2].translate(0, -0.0005f * 2, 0);
                     }
-                    if (b >= 21 + delay && b < 58 + delay)
+                    if (b >= 21 / 2 + delay && b < 58 / 2 + delay)
                     {
-                        objectList[1].translate(-0.0005f, 0, -0.001f);
+                        objectList[1].translate(-0.0005f * 2, 0, -0.001f * 2);
                     }
-                    if ((b >= 59 + delay && b < 150 + delay))
+                    if ((b >= 59 / 2 + delay && b < 150 / 2 + delay))
                     {
-                        objectList[1].translate(-0.001f, -0.001f, -0.0005f);
-                        objectList[2].translate(-0.001f, 0.001f, -0.0005f);
+                        objectList[1].translate(-0.001f * 2, -0.001f, -0.0005f * 2);
+                        objectList[2].translate(-0.001f * 2, 0.001f, -0.0005f * 2);
                     }
                 }
             }
@@ -808,10 +816,75 @@ namespace ConsoleApp3
             {
                 c += 1;
             }
-            if (b == 6 + delay)
+            if (b == 6 / 2 + delay)
             {
                 objectList[2].rotate(objectList[2].objectCenter, Vector3.UnitX, 150);
             }
+
+            if (fly >= 0 && fly < 100 && flying)
+            {
+                if (fly < 50)
+                {
+                        bug1.child[0].rotate(bug1.child[0].objectCenter, Vector3.UnitZ, -50 * time);
+                        bug1.child[1].rotate(bug1.child[1].objectCenter, Vector3.UnitZ, 50 * time);
+                }
+
+                if (fly > 50)
+                {
+                    bug1.child[0].rotate(bug1.child[0].objectCenter, Vector3.UnitZ, 50 * time);
+                    bug1.child[1].rotate(bug1.child[1].objectCenter, Vector3.UnitZ, -50 * time);
+                }
+                fly += 1;
+            }
+            if (fly == 100)
+            {
+                fly = 0;
+            }
+
+            if (walk >= 0 && walk < 100 && walking)
+            {
+                if (walk < 50 && changeFoot)
+                {
+                    bug1.child[2].rotate(bug1.child[2].objectCenter, Vector3.UnitZ, 50 * time);
+                    bug1.child[3].rotate(bug1.child[3].objectCenter, Vector3.UnitZ, -50 * time);
+                    bug1.child[4].rotate(bug1.child[4].objectCenter, Vector3.UnitZ, -50 * time);
+                }
+                else if (changeFoot)
+                {
+                    bug1.child[2].rotate(bug1.child[2].objectCenter, Vector3.UnitZ, -50 * time);
+                    bug1.child[3].rotate(bug1.child[3].objectCenter, Vector3.UnitZ, 50 * time);
+                    bug1.child[4].rotate(bug1.child[4].objectCenter, Vector3.UnitZ, 50 * time);
+                }
+
+                if (walk < 50 && !changeFoot)
+                {
+                    bug1.child[2].rotate(bug1.child[2].child[3].objectCenter, Vector3.UnitZ, -50 * time);
+                    bug1.child[3].rotate(bug1.child[3].child[3].objectCenter, Vector3.UnitZ, 50 * time);
+                    bug1.child[4].rotate(bug1.child[4].child[3].objectCenter, Vector3.UnitZ, 50 * time);
+                }
+                else if (!changeFoot)
+                {
+                    bug1.child[2].rotate(bug1.child[2].child[3].objectCenter, Vector3.UnitZ, 50 * time);
+                    bug1.child[3].rotate(bug1.child[3].child[3].objectCenter, Vector3.UnitZ, -50 * time);
+                    bug1.child[4].rotate(bug1.child[4].child[3].objectCenter, Vector3.UnitZ, -50 * time);
+                }
+                walk += 1;
+            }
+            if (walk == 100)
+            {
+                walk = 0;
+                if (changeFoot)
+                {
+                    changeFoot = false;
+                }
+                else
+                {
+                    changeFoot = true;
+                }
+            }
+            bug1.child[2].resetEuler();
+            bug1.child[3].resetEuler();
+            bug1.child[4].resetEuler();
 
             GL.Disable(EnableCap.CullFace);
             GL.DepthFunc(DepthFunction.Lequal);
@@ -847,10 +920,69 @@ namespace ConsoleApp3
                 Console.WriteLine(camera.Position);
             }
 
+            if(camera.Position.Y > -9.2f)
+            {
+                flying = true;
+            }
+
+            #region cameraRotations
+            if (KeyboardState.IsKeyDown(Keys.X)) // right
+            {
+                bug1.child[5].rotate(bug1.child[5].objectCenter, Vector3.UnitY, (float)args.Time * -100);
+                camera.Yaw += cameraSpeed * (float)args.Time * 10;
+                headDir = false;
+            }
+            if (KeyboardState.IsKeyDown(Keys.C)) // left
+            {
+                bug1.child[5].rotate(bug1.child[5].objectCenter, Vector3.UnitY, (float)args.Time * 100);
+                camera.Yaw -= cameraSpeed * (float)args.Time * 10;
+                headDir = false;
+            }
+            if (KeyboardState.IsKeyDown(Keys.V)) // down
+            {
+                bug1.child[5].rotate(bug1.child[5].objectCenter, Vector3.UnitX, (float)args.Time * -100);
+                camera.Pitch -= cameraSpeed * (float)args.Time * 10;
+                headDir = false;
+            }
+            if (KeyboardState.IsKeyDown(Keys.B)) // up
+            {
+                bug1.child[5].rotate(bug1.child[5].objectCenter, Vector3.UnitX, (float)args.Time * 100);
+                camera.Pitch += cameraSpeed * (float)args.Time * 10;
+                headDir = false;
+            }
+            #endregion
+
             #region cameraMovements
             if (input.IsKeyDown(Keys.W)) // forward
             {
-                if (!isOverlaps() && camera.Position.Z > -28.25f)
+                // jika kepala belum lurus
+                if (camera.Yaw > -90 && !headDir)
+                {
+                    camera.Yaw -= cameraSpeed * (float)args.Time * 10;
+                }
+                else if (camera.Yaw < -90 && !headDir)
+                {
+                    camera.Yaw -= cameraSpeed * (float)args.Time * -10;
+                }
+
+                if (camera.Pitch > 0 && !headDir)
+                {
+                    camera.Pitch -= cameraSpeed * (float)args.Time * 10;
+                }
+                else if (camera.Pitch < 0 && !headDir)
+                {
+                    camera.Pitch -= cameraSpeed * (float)args.Time * -10;
+                }
+
+                if (camera.Yaw >= -91 && camera.Yaw <= -89)
+                {
+                    if (camera.Pitch >= -1 && camera.Yaw <= 0)
+                    {
+                        headDir = true;
+                    }
+                }
+
+                if (!isOverlaps() && camera.Position.Z > -28.25f && headDir)
                 {
                     camera.Position += Vector3.Normalize(Vector3.Cross(camera.Up, camera.Right)) * cameraSpeed * time;
                     bug1.translate(0, 0, -cameraSpeed * (float)args.Time);
@@ -860,7 +992,15 @@ namespace ConsoleApp3
                     camera.Position -= Vector3.Normalize(Vector3.Cross(camera.Up, camera.Right)) * cameraSpeed * .01f;
                     bug1.translate(0, 0, cameraSpeed * (float).01f);
                 }
-                
+                if (camera.Position.Y < -9.2f)
+                {
+                    walking = true;
+                }
+                else
+                {
+                    walking = false;
+                }
+
             }
 
             if (input.IsKeyDown(Keys.S)) // backward
@@ -875,7 +1015,16 @@ namespace ConsoleApp3
                     camera.Position += Vector3.Normalize(Vector3.Cross(camera.Up, camera.Right)) * cameraSpeed * .01f;
                     bug1.translate(0, 0, -cameraSpeed * (float).01f);
                 }
+                if (camera.Position.Y < -9.2f)
+                {
+                    walking = true;
+                }
+                else
+                {
+                    walking = false;
+                }
             }
+
             if (input.IsKeyDown(Keys.A)) // left
             {
                 if (!isOverlaps() && camera.Position.X > -48)
@@ -887,6 +1036,14 @@ namespace ConsoleApp3
                 {
                     camera.Position += camera.Right * cameraSpeed * .01f;
                     bug1.translate(cameraSpeed * (float).01f, 0f, 0f);
+                }
+                if (camera.Position.Y < -9.2f)
+                {
+                    walking = true;
+                }
+                else
+                {
+                    walking = false;
                 }
             }
 
@@ -902,6 +1059,15 @@ namespace ConsoleApp3
                     camera.Position -= camera.Right * cameraSpeed * .01f;
                     bug1.translate(-cameraSpeed * (float).01f, 0f, 0f);
                 }
+                if(camera.Position.Y < -9.2f)
+                {
+                    walking = true;
+                }
+                else
+                {
+                    walking = false;
+                }
+                
             }
 
             if (input.IsKeyDown(Keys.Space)) // up
@@ -916,6 +1082,7 @@ namespace ConsoleApp3
                     camera.Position -= camera.Up * cameraSpeed * .01f;
                     bug1.translate(0f, -cameraSpeed * (float).01f, 0f);
                 }
+                walking = false;
             }
 
             if (input.IsKeyDown(Keys.Z)) // down
@@ -930,6 +1097,13 @@ namespace ConsoleApp3
                     camera.Position += camera.Up * cameraSpeed * .01f;
                     bug1.translate(0f, cameraSpeed * (float).01f, 0f);
                 }
+
+                if (camera.Position.Y < -9.2f)
+                {
+                    flying = false;
+                }
+
+                walking = false;
             }
             #endregion
 
